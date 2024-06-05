@@ -7,10 +7,33 @@
   <title>Générateur de données</title>
 </head>
 <body class="bg-[#00a1e0]">
-  <h1 class="text-red-600 text-center">Générateur de données</h1>
-  <label for="numberOfLeads">Nombre de leads :</label>
-  <input type="number" id="numberOfLeads" min="1" value="10">
-  <button id="generateButton">Générer CSV</button>
+  <h1 class="text-4xl text-white font-bold text-center">Générateur de DataSet Salesforce</h1>
+  <div class="max-w-5xl mx-auto px-4 flex flex-wrap items-center">
+    <!-- Texte de présentation -->
+    <div class="w-full md:w-2/3 md:pr-8">
+      <h2 class="text-3xl font-bold mb-6">Bienvenue dans notre Générateur de Leads Salesforce</h2>
+      <p class="text-lg leading-relaxed mb-6">Notre Générateur de Leads Salesforce est un outil spécialisé conçu pour simplifier la création de données factices pour vos projets Salesforce, qu'il s'agisse de développement, de tests ou de démonstrations. Que vous ayez besoin de simuler des clients potentiels, des prospects ou des contacts pour votre système Salesforce, notre générateur est là pour vous aider.</p>
+      <p class="text-lg leading-relaxed mb-4">**Fonctionnalités principales :**</p>
+      <ul class="list-disc ml-8 mb-8">
+        <li class="mb-2">**Personnalisation du nombre de leads :** Choisissez facilement le nombre de leads que vous souhaitez générer en ajustant simplement le curseur.</li>
+        <li class="mb-2">**Exportation en CSV :** Exportez les données générées au format CSV pour une intégration facile dans votre instance Salesforce.</li>
+        <li class="mb-2">**Données Salesforce réalistes :** Générez des données de leads conformes aux champs standard de Salesforce, tels que le nom, l'email, le téléphone, l'entreprise, etc.</li>
+        <li class="mb-2">**Facile à utiliser :** Interface utilisateur intuitive et conviviale, même pour les débutants.</li>
+      </ul>
+      <p class="text-lg leading-relaxed">Commencez dès maintenant à utiliser notre Générateur de Leads Salesforce et économisez du temps et des efforts précieux dans le processus de développement et de test de votre instance Salesforce.</p>
+    </div>
+  
+    <!-- Partie générateur -->
+    <div class="w-full md:w-1/3 mt-8 md:mt-0">
+      <div class="flex flex-col">
+        <label for="numberOfLeads" class="text-lg font-bold mb-2">Nombre de leads :</label>
+        <input type="number" id="numberOfLeads" min="1" value="10" class="border border-gray-300 rounded-md p-2 mb-4">
+        <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded border border-blue-700 hover:bg-blue-600" id="generateButton">Générer CSV</button>
+      </div>
+    </div>
+  </div>
+  
+  
 
   <script>
     document.getElementById('generateButton').addEventListener('click', function() {
