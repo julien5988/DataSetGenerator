@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./src/output.css" rel="stylesheet">
+  <title>Générateur de données</title>
+</head>
+<body class="bg-[#00a1e0]">
+  <h1 class="text-red-600 text-center">Générateur de données</h1>
+  <label for="numberOfLeads">Nombre de leads :</label>
+  <input type="number" id="numberOfLeads" min="1" value="10">
+  <button id="generateButton">Générer CSV</button>
+
+  <script>
+    document.getElementById('generateButton').addEventListener('click', function() {
+      const numberOfLeads = document.getElementById('numberOfLeads').value;
+
+      // Envoyer une requête POST vers le serveur avec le nombre de leads sélectionné
+      fetch(`http://localhost:3000/generate-csv?numberOfLeads=${numberOfLeads}`, { method: 'POST' })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erreur lors de la génération du fichier CSV');
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          // Créer un objet Blob à partir du Blob reçu
+          const csvBlob = new Blob([blob], { type: 'text/csv' });
+
+          // Créer un lien de téléchargement pour le fichier CSV généré
+          const downloadLink = document.createElement('a');
+          downloadLink.href = URL.createObjectURL(csvBlob);
+          downloadLink.download = 'leads.csv';
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Une erreur s\'est produite lors de la génération du fichier CSV');
+        });
+    });
+  </script>
+</body>
+</html>
