@@ -2,24 +2,20 @@ const express = require('express');
 const { faker } = require('@faker-js/faker');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Utilisation du port fourni par Vercel ou du port 3000 par défaut
 
 app.use(cors());
 
 app.post('/generate-csv', (req, res) => {
-  // Récupérer le nombre de leads à générer depuis les paramètres de la requête
-  const numberOfLeads = req.query.numberOfLeads || 10; // Par défaut, générer 10 leads
-
+  const numberOfLeads = req.query.numberOfLeads || 10;
   const leadStatus = [
     "Open - Not Contacted",
     "Working - Contacted",
     "Closed - Converted",
     "Closed - Not Converted"
   ];
-
   const records = [];
 
   for (let i = 0; i < numberOfLeads; i++) {
@@ -42,8 +38,6 @@ app.post('/generate-csv', (req, res) => {
     });
   }
 
-  const csvFilePath = path.join(__dirname, 'leads.csv');
-
   const csvWriter = createCsvWriter({
     header: [
       { id: 'firstName', title: 'Prénom' },
@@ -54,14 +48,13 @@ app.post('/generate-csv', (req, res) => {
       { id: 'company', title: 'Entreprise' },
       { id: 'leadStatus', title: 'Statut du lead' }
     ],
-    // Spécifiez le chemin d'accès au fichier CSV
-    path: csvFilePath
+    path: 'leads.csv' // Vous pouvez également utiliser path.join(__dirname, 'leads.csv') pour spécifier le chemin complet
   });
 
   csvWriter.writeRecords(records)
     .then(() => {
       console.log(`Fichier CSV de ${numberOfLeads} leads généré avec succès`);
-      res.download(csvFilePath, 'leads.csv', (err) => {
+      res.download('leads.csv', (err) => {
         if (err) {
           console.error('Erreur lors du téléchargement du fichier CSV :', err);
           res.status(500).send('Erreur lors du téléchargement du fichier CSV');
