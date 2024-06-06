@@ -42,6 +42,8 @@ app.post('/generate-csv', (req, res) => {
     });
   }
 
+  const csvFilePath = path.join(__dirname, 'leads.csv');
+
   const csvWriter = createCsvWriter({
     header: [
       { id: 'firstName', title: 'Prénom' },
@@ -53,13 +55,13 @@ app.post('/generate-csv', (req, res) => {
       { id: 'leadStatus', title: 'Statut du lead' }
     ],
     // Spécifiez le chemin d'accès au fichier CSV
-    path: path.join(__dirname, 'leads.csv')
+    path: csvFilePath
   });
 
   csvWriter.writeRecords(records)
     .then(() => {
       console.log(`Fichier CSV de ${numberOfLeads} leads généré avec succès`);
-      res.download(path.join(__dirname, 'leads.csv'), (err) => {
+      res.download(csvFilePath, 'leads.csv', (err) => {
         if (err) {
           console.error('Erreur lors du téléchargement du fichier CSV :', err);
           res.status(500).send('Erreur lors du téléchargement du fichier CSV');
