@@ -1,2 +1,3 @@
 # Ignore les modules Node.js
 node_modules/
+.vercel

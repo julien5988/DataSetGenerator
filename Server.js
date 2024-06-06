@@ -2,6 +2,7 @@ const express = require('express');
 const { faker } = require('@faker-js/faker');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -52,13 +53,13 @@ app.post('/generate-csv', (req, res) => {
       { id: 'leadStatus', title: 'Statut du lead' }
     ],
     // Spécifiez le chemin d'accès au fichier CSV
-    path: 'leads.csv'
+    path: path.join(__dirname, 'leads.csv')
   });
 
   csvWriter.writeRecords(records)
     .then(() => {
       console.log(`Fichier CSV de ${numberOfLeads} leads généré avec succès`);
-      res.download('leads.csv', (err) => {
+      res.download(path.join(__dirname, 'leads.csv'), (err) => {
         if (err) {
           console.error('Erreur lors du téléchargement du fichier CSV :', err);
           res.status(500).send('Erreur lors du téléchargement du fichier CSV');
