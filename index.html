@@ -64,7 +64,7 @@
       const numberOfLeads = document.getElementById('numberOfLeads').value;
 
       // Envoyer une requête POST vers le serveur avec le nombre de leads sélectionné
-      fetch(`https://data-set-generator-phi.vercel.app/generate-csv?numberOfLeads=${numberOfLeads}`, { method: 'POST' })
+      fetch(`https://bejewelled-ganache-9b3e7f.netlify.app/generate-csv?numberOfLeads=${numberOfLeads}`, { method: 'POST' })
         .then(response => {
           if (!response.ok) {
             throw new Error('Erreur lors de la génération du fichier CSV');
